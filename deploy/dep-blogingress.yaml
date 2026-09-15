@@ -21,6 +21,3 @@ spec:
         - name: blog       # Container name
           image: blog:v1.0.0  # Image to run in the container
           imagePullPolicy: IfNotPresent  # Image pull policy
-          resources:
-            requests:      # Control the hardware resources requested by the Pod
-              cpu: 10m     # 1 CPU core = 1000m; 10m = 0.01 CPU
