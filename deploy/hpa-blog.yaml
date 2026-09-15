@@ -1,0 +1,27 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+
+metadata:
+  name: hpa-blog
+
+spec:
+  maxReplicas: 5  # max 5 replicas
+  minReplicas: 2  # min 2 replicas
+  scaleTargetRef:  # describes which target to monitor
+    apiVersion: apps/v1
+    kind: Deployment
+    name: dep-blog
+  targetCPUUtilizationPercentage: 50    # auto-scale when CPU utilization reaches 50% of its allocated amount (in this case 5m of 10m for 3 pods)
+
+
+# wget -O deploy/metrics-server.yaml https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+# kubectl apply -f deploy/metrics-server.yaml
+# kubectl get pod -o wide -n kube-system | grep metrics
+# kubectl apply -f deploy/dep-blogingress.yaml
+# kubectl apply -f deploy/hpa-blog.yaml
+# kubectl get hpa
+# kubectl get pod | grep blog
+# bash ./stress_test.sh
+# kubectl get hpa
+# kubectl get pod | grep blog
+# kubectl describe hpa hpa-blog
