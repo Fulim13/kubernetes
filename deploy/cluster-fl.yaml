@@ -1,0 +1,11 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: fl
+nodes:
+  - role: control-plane    # There is logically only one control plane, but there can be multiple physical nodes; usually an odd number, then a proxy will select one of the control plane (for availability, one control pane may down)
+  - role: worker     # Worker node
+  - role: worker
+
+# kind delete cluster --name fl
+# kind create cluster --config deploy/cluster-fl.yaml
+# kind get nodes --name fl
