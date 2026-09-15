@@ -15,3 +15,10 @@ spec:
             name: svc-blog
             port:
               number: 5678      # the service's working port number
+      - path: /lottery
+        pathType: Prefix
+        backend:
+          service:
+            name: svc-lottery
+            port:
+              number: 5679      # the service's working port number

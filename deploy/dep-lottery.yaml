@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: dep-lottery  # name of the deployment
+  labels:     # labels of the deployment
+    app: lottery
+
+spec:
+  replicas: 2   # number of pod replicas
+  selector:    # which pods this deployment matches
+    matchLabels:
+      app: lottery
+
+  template:   # pod spec
+    metadata:
+      labels:  # labels of the pod
+        app: lottery
+    spec:
+      containers:   # containers included in the pod
+        - name: lottery   # container name
+          image: lottery:v1.0.0  # image the container runs
+          imagePullPolicy: IfNotPresent   # image pull policy
+          resources:
+            requests:    # controls the pod's hardware resource usage
+              cpu: 10m  # 1 CPU core = 1000m, 10m equals 0.01 CPU
+
+
+# deployment --> pod --> container --> image
+
+# docker build -t lottery:v1.0.0 lottery/
+# kind load docker-image lottery:v1.0.0 --name flingress
+# kubectl apply -f deploy/dep-lottery.yaml
+# kubectl apply -f deploy/svc-lottery.yaml
+# kubectl get pod -o wide
+# kubectl get svc -o wide
+# kubectl apply -f deploy/ingress-nginx.yaml
+# curl localhost/lottery?name=fl
