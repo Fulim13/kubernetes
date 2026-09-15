@@ -36,7 +36,6 @@ In Kubernetes cluster
 1. 1 of the node is control plan to receive request from client and manage compute machines
 2. Other nodes is compute machines where it can deploy multiple pods
 3. Every Pod can deploy multiple container
-   ![alt text](<CleanShot 2026-09-15 at 11.32.23 PM.png>)
 
 # Create a k8s cluster
 
