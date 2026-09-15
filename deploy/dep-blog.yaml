@@ -7,7 +7,7 @@ metadata:
     app: blog
 
 spec:
-  replicas: 2     # Number of Pod replicas
+  replicas: 1     # Number of Pod replicas
   selector:       # Specify which Pods to match
     matchLabels:
       app: blog
@@ -24,9 +24,23 @@ spec:
           resources:
             requests:      # Control the hardware resources requested by the Pod
               cpu: 10m     # 1 CPU core = 1000m; 10m = 0.01 CPU
-
+      nodeSelector:
+        hp: "true"
 # kind load docker-image blog:v1.0.0 --name fl
 # kubectl apply -f deploy/dep-blog.yaml
 # kubectl get pod
 # kubectl get pod -o wide
 # docker exec fl-control-plane curl <ip>:5678/?name=fl
+
+# Label node
+# kubectl label nodes fl-worker hp=true
+
+# Get Labels from nodes
+# kubectl label nodes fl-worker --list
+
+# Get nodes from Label
+# kubectl get node -l hp=true
+
+# Apply deployment
+# kubectl apply -f deploy/dep-blog.yaml
+# kubectl get pod -o wide
