@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: dep-blog  # Deployment name
+  labels:         # Deployment labels
+    app: blog
+
+spec:
+  replicas: 2     # Number of Pod replicas
+  selector:       # Specify which Pods to match
+    matchLabels:
+      app: blog
+
+  template:       # Define the Pod configuration
+    metadata:
+      labels:      # Pod labels
+        app: blog
+    spec:
+      containers: # Containers included in the Pod
+        - name: blog       # Container name
+          image: blog:v1.0.0  # Image to run in the container
+          imagePullPolicy: IfNotPresent  # Image pull policy
+          resources:
+            requests:      # Control the hardware resources requested by the Pod
+              cpu: 10m     # 1 CPU core = 1000m; 10m = 0.01 CPU

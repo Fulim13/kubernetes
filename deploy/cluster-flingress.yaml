@@ -1,0 +1,45 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: flingress
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 80
+        hostPort: 80
+        protocol: TCP
+      - containerPort: 443
+        hostPort: 443
+        protocol: TCP
+  - role: worker
+  - role: worker
+  - role: worker
+
+# kind delete cluster --name fl
+# kind create cluster --config deploy/cluster-flingress.yaml
+
+# Add ingress-ready: "true" label to control plane node
+# kubectl label nodes flingress-control-plane ingress-ready=true
+
+# Apply deployment the ingress-controller
+# kubectl apply -f deploy/ingress-controller.yaml
+
+# View Port Detail
+# You can see the ingress-controller is in the control pane node
+# kubectl get pod -n ingress-nginx -o wide
+
+# Load the blog image to nodes of cluster flingress
+# kind load docker-image blog:v1.0.0 --name flingress
+
+# Apply deployment blog to 2 repliaca and Apply service
+# kubectl apply -f deploy/dep-blogingress.yaml
+# kubectl apply -f deploy/svc-blogingress.yaml
+
+# View the port
+# kubectl get pod -o wide
+# kubectl get svc
+
+# Apply the ingress
+# kubectl apply -f deploy/ingress-nginx.yaml
+
+# Test the endpoint
+# curl localhost/blog?name=fl

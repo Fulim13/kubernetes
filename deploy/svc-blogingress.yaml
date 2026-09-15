@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: svc-blog    # service name
+
+spec:
+  type: ClusterIP # service type. ClusterIP means the service exposes a virtual IP within the k8s cluster, used to access the service internally. This IP stays fixed regardless of which node the pods run on
+  ports:
+    - name: http
+      port: 5678    # port used for external access
+      targetPort: 5678    # port used by the application code
+      protocol: TCP
+  selector: # which pods this service matches
+    app: blog # pod label to match
